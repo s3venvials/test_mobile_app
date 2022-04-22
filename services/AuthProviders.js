@@ -2,10 +2,11 @@ import * as API from "../api/Authentication";
 import * as ACTIONS from "../actions";
 
 export default class AuthenticationProviders {
-  constructor(action, email, password) {
+  constructor(action, email, password, idToken) {
     this.action = action;
     this.email = email;
     this.password = password;
+    this.idToken = idToken;
   }
 
   async EmailPassword() {
@@ -19,5 +20,15 @@ export default class AuthenticationProviders {
     }
   }
 
-  Google() {}
+  async SendEmailVerification() {
+    return await API.sendEmailVerification(this.idToken);
+  }
+
+  async ResetPassword() {
+    return await API.ResetPassword(this.email);
+  }
+
+  async DeleteAccount() {
+    return await API.deleteAccount(this.idToken);
+  }
 }

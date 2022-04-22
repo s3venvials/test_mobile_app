@@ -6,7 +6,7 @@ import AppBarBottom from "../components/AppBarBottom";
 export default function HomeScreen({ navigation }) {
   return (
     <View>
-      <View style={style.container}>
+      <View style={styles.container}>
         <Text>Home Screen</Text>
         <Button
           title="Go to details"
@@ -18,7 +18,7 @@ export default function HomeScreen({ navigation }) {
   );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     height: '100%',
     alignItems: "center",

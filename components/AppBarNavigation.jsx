@@ -11,7 +11,7 @@ const AppBarNavigation = ({ navigation, back }) => {
   const navName =
     navigation.getState().routes[navigation.getState().index].name;
   const isSplash = navName === "Splash";
-  const isAuth = navName === "Auth";
+  const isAuth = navName === "Auth" || navName === "Reset";
   const isHome = navName === "Home";
   const authStorage = new AuthStorage();
   authStorage.key = "User";
@@ -20,7 +20,7 @@ const AppBarNavigation = ({ navigation, back }) => {
     const getUser = async () => {
       const currentUser = await authStorage.Get();
       setUser(JSON.parse(currentUser));
-    }
+    };
     if (!isAuth) {
       getUser();
     }
@@ -35,7 +35,9 @@ const AppBarNavigation = ({ navigation, back }) => {
       {!isHome && !isAuth && back ? (
         <Appbar.BackAction onPress={navigation.goBack} />
       ) : null}
-      <Appbar.Content title={isAuth ? "My Test App" : `Hello ${user?.email ?? ""}`} />
+      <Appbar.Content
+        title={isAuth ? "My Test App" : `Hello ${user?.email ?? ""}`}
+      />
       {!isAuth && isHome && (
         <Menu
           visible={visible}

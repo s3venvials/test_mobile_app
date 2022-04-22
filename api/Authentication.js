@@ -42,3 +42,50 @@ export const emailPasswordLogin = async (email, password) => {
     throw new Error(error);
   }
 };
+
+export const sendEmailVerification = async (idToken) => {
+  try {
+    const response = axios.post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${FIREBASE_API}`,
+      {
+        requestType: "VERIFY_EMAIL",
+        idToken,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const ResetPassword = async (email) => {
+  try {
+    const response = axios.post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${FIREBASE_API}`,
+      {
+        requestType: "PASSWORD_RESET",
+        email,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteAccount = async (idToken) => {
+  try {
+    const response = axios.post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:delete?key=${FIREBASE_API}`,
+      {
+        idToken,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

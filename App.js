@@ -11,8 +11,10 @@ import {
 import AppBarNavigation from "./components/AppBarNavigation";
 import SplashScreen from "./screens/SplashScreen";
 import AuthScreen from "./screens/AuthScreen";
+import ForgotPassScreen from "./screens/ForgotPassScreen";
 import HomeScreen from "./screens/HomeScreen";
 import DetailsScreen from "./screens/DetailsScreen";
+import AccountScreen from "./screens/AccountScreen";
 
 const Stack = createStackNavigator();
 
@@ -38,8 +40,10 @@ export default function App() {
         >
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="Auth" component={AuthScreen} />
+          <Stack.Screen name="Reset" component={ForgotPassScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Details" component={DetailsScreen} />
+          <Stack.Screen name="Account" component={AccountScreen} />
         </Stack.Navigator>
       </PaperProvider>
     </NavigationContainer>

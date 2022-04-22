@@ -6,6 +6,7 @@ import SignUpScreen from "./SignUpScreen";
 import AuthStorage from "../services/AuthStorage";
 
 import AuthenticationProviders from "../services/AuthProviders";
+import Token from "../services/Token";
 import * as ACTIONS from "../actions";
 
 const initialState = {
@@ -21,12 +22,16 @@ const AuthScreen = ({ navigation }) => {
   const [state, setState] = useState(initialState);
 
   const authProvider = new AuthenticationProviders();
+  const token = new Token();
 
   const handleAuth = async () => {
     authProvider.action = ACTIONS.LOGIN;
     authProvider.email = state.email;
     authProvider.password = state.password;
     const response = await authProvider.EmailPassword();
+    token.idToken = response.data.idToken;
+    token.key = "Token";
+    await token.Save();
     await new AuthStorage("User", JSON.stringify(response.data.idToken)).Save();
   };
 
@@ -42,6 +47,15 @@ const AuthScreen = ({ navigation }) => {
 
       setLoading(true);
       await handleAuth();
+      const currentUser = JSON.parse(await new AuthStorage("User").Get());
+      if (!currentUser.verified) {
+        setLoading(false);
+        setState((prevState) => ({
+          ...prevState,
+          error: "Account not yet verified",
+        }));
+        return;
+      }
       setState(initialState);
       setTimeout(() => {
         setLoading(false);
@@ -106,6 +120,13 @@ const AuthScreen = ({ navigation }) => {
         onPress={() => setSignUp(true)}
       >
         Sign Up
+      </Button>
+      <Button
+        style={styles.signInBtn}
+        mode="text"
+        onPress={() => navigation.navigate("Reset")}
+      >
+        Forgot Password
       </Button>
     </View>
   );

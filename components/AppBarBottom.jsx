@@ -25,7 +25,7 @@ const AppBarBottom = () => {
       <View style={styles.actions}>
         <Appbar.Action
           icon="account"
-          onPress={() => console.log("Pressed account")}
+          onPress={() => navigation.navigate("Account")}
         />
       </View>
       <View style={styles.actions}>
